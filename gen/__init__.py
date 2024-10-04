@@ -1,4 +1,5 @@
 import sys
+import signal
 import os
 import math
 import random
@@ -6,6 +7,13 @@ import numpy as np
 from PyQt5.QtWidgets import QApplication
 from PyQt5.QtGui import QPainter, QPixmap, QColor, QPen
 from PyQt5.QtCore import Qt, QPointF
+
+
+def signal_handler(sig, frame):
+    sys.exit(0)
+
+
+signal.signal(signal.SIGINT, signal_handler)
 
 app = QApplication(sys.argv)
 
@@ -220,6 +228,15 @@ def draw(
     save(p, fname=f"image_{seed}", folder=".", overwrite=True)
 
 
-for x in range(6):
-    for y in range(6):
-        draw(3000, 2000, color=63, perlinFactorW=x, perlinFactorH=y, step=0.35)
+while True:
+    try:
+        draw(
+            3000,
+            2000,
+            color=random.randint(0, 255),
+            perlinFactorW=random.randint(1, 6),
+            perlinFactorH=random.randint(1, 10),
+            step=random.random(),
+        )
+    except AssertionError as e:
+        print(e)
