@@ -82,14 +82,14 @@ def draw(
     p = QPainter()
     p.image = QPixmap(width, height)
     p.begin(p.image)
-    # p.setRenderHint(p.Antialiasing)
+    p.image.fill(QColor(255, 255, 255))
 
-    p.setPen(QPen(QColor(255, 255, 255)))
+    p.setPen(QPen(QColor(0, 0, 0)))
 
     p_noise = generate_perlin_noise_2d((width, height), (3, 2))
 
-    amount_of_lines = 1000
-    max_length = width * height / amount_of_lines * 5
+    amount_of_lines = 10000
+    max_length = 10
     starting_points = [
         (random.randint(0, width - 1), random.randint(0, height - 1))
         for _ in range(amount_of_lines)
